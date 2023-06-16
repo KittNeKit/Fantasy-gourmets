@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>
+    {{ useraccount.username }}
+  </title>
+{% endblock %}
+
+{% block content %}
+  <header class="header-2">
+  <div class="page-header mt-10 relative">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 text-center mx-auto">
+          <h1 class="text-dark pt-3 mt-5">Username: {{ useraccount.username }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container mt-sm-5 mt-3">
+    <div class="row">
+      {% if useraccount.first_name %}
+        <p><strong>First name:</strong> {{ useraccount.first_name }}</p>
+      {% endif %}
+      {% if useraccount.first_name %}
+        <p><strong>Last name:</strong> {{ useraccount.last_name }}</p>
+      {% endif %}
+        <p><strong>Type user:</strong> {{ useraccount.type_user }}</p>
+      {% if useraccount.email %}
+        <p><strong>Email:</strong> {{ useraccount.email }}</p>
+      {% endif %}
+
+    <h1>
+      {% if user.id == useraccount.pk %}
+        <a href="{% url 'menu:useraccount-edit' pk=user.id%}">
+          <button type="submit" class="btn btn-lg bg-gradient-primary">edit</button>
+        </a>
+      {% endif %}
+    </h1>
+      </div>
+    </div>
+
+{% endblock %}

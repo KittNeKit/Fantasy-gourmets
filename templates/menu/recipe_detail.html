@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>
+    {{ recipe.name }}
+  </title>
+{% endblock %}
+{% block content %}
+  <header class="header-2">
+  <div class="page-header min-vh-75 relative" style="background-image: url('{% static 'img/417947.jpg' %}')">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 text-center mx-auto">
+          <h1 class="text-white pt-3 mt-n5">{{ recipe.name }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+    <div class="container mt-sm-5 mt-3">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="position-sticky pb-lg-5 pb-3 mt-lg-0 mt-5 ps-2" style="top: 100px">
+          <h3>Ingredients:</h3>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <p class="lead text-dark mt-3">{{ recipe.ingredients|linebreaks }}</p>
+        </div>
+      </div>
+    </div>
+      <div class="container mt-sm-5 mt-3">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="position-sticky pb-lg-5 pb-3 mt-lg-0 mt-5 ps-2" style="top: 100px">
+          <h3>Cooking step:</h3>
+        </div>
+      </div>
+
+      <div class="col-lg-9">
+        <p class="lead text-dark mt-3">{{ recipe.cooking_step|linebreaks }}</p>
+        </div>
+      </div>
+    </div>
+
+{% endblock %}

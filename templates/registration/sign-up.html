@@ -2,7 +2,11 @@
 {% load crispy_forms_filters %}
 {% load static %}
 
-{% block title %} Registration {% endblock title %}
+{% block title %}
+  <title>
+  Sign Up
+  </title>
+{% endblock %}
 {% block body %} class="sign-in-illustration" {% endblock body %}
 
 {% block header %}
@@ -37,7 +41,7 @@
             <div class="card-footer text-center pt-0 px-lg-2 px-1">
               <p class="mb-4 text-sm mx-auto">
                 Already have an account?
-                <a href="{% url 'a' %}" class="text-primary text-gradient font-weight-bold">Sign In</a>
+                <a href="{% url 'login' %}" class="text-primary text-gradient font-weight-bold">Sign In</a>
               </p>
             </div>
           </div>
@@ -46,7 +50,7 @@
           <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
             <img src="{% static 'img/shapes/pattern-lines.svg' %}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
             <div class="position-relative">
-              <img class="max-width-500 w-100 position-relative z-index-2" src="{% static 'img/illustrations/chat.png' %}">
+              <img class="max-width-500 w-100 position-relative z-index-2" src="{% static 'img/illustrations/sign-up.png' %}">
             </div>
             <h4 class="mt-5 text-white font-weight-bolder">"Attention is the new currency"</h4>
             <p class="text-white">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
@@ -58,9 +62,3 @@
 </section>
 
 {% endblock content %}
-
-{% block footer %}
-
-{% include 'includes/footer_signin.html' %}
-
-{% endblock footer %}

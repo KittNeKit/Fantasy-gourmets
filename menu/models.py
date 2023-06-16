@@ -11,10 +11,17 @@ class TypeUser(models.Model):
 
 
 class UserAccount(AbstractUser):
-    type_user = models.ForeignKey(TypeUser, on_delete=models.CASCADE, null=True)
+    type_user = models.ForeignKey(
+        TypeUser,
+        on_delete=models.CASCADE,
+        null=True
+    )
 
     def __str__(self):
         return self.username
+
+    def get_absolute_url(self):
+        return reverse("menu:useraccount-detail", kwargs={"pk": self.pk})
 
 
 class Game(models.Model):
@@ -23,6 +30,12 @@ class Game(models.Model):
 
     def __str__(self):
         return self.name
+
+    def __repr__(self):
+        return self.pk
+
+    def get_absolute_url(self):
+        return reverse("menu:game-detail", kwargs={"pk": self.pk})
 
 
 class TypeOfDish(models.Model):

@@ -1,10 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load static %}
+
+{% block title %}
+  <title>
+  Create recipe
+  </title>
+{% endblock %}
+{% block body %} class="sign-in-illustration" {% endblock body %}
+
+{% block header %}
+
+{% include 'includes/navigation.html' %}
+
+{% endblock header %}
+
+{% block content %}
+
+<section>
+  <div class="page-header min-vh-10 relative">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-auto">
+          <div class="card card-plain">
+            <div class="card-header pb-0 text-center">
+              <h4 class="font-weight-bolder mt-7">Create Recipe</h4>
+              <p class="mb-0">Field form to create your own recipe from game!</p>
+            </div>
+            <div class="card-body">
+              <form method="post" action="#" role="form">
+                {% csrf_token %}
+               {{ form|crispy }}
+
+
+                <div class="text-center">
+                  <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Create!</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock content %}

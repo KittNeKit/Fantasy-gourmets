@@ -2,7 +2,12 @@
 {% load static %}
 {% load crispy_forms_filters %}
 
-{% block title %} Soft UI Design System by Creative Tim {% endblock title %}
+{% block title %}
+  <title>
+    Login
+  </title>
+{% endblock %}
+
 {% block body %} class="sign-in-illustration" {% endblock body %}
 
 {% block header %}
@@ -44,7 +49,7 @@
             <div class="card-footer text-center pt-0 px-lg-2 px-1">
               <p class="mb-4 text-sm mx-auto">
                 Don't have an account?
-                <a href="{% url 'menu:user-create' %} " class="text-primary text-gradient font-weight-bold">Sign up</a>
+                <a href="{% url 'menu:useraccount-create' %} " class="text-primary text-gradient font-weight-bold">Sign up</a>
               </p>
             </div>
           </div>
@@ -65,9 +70,3 @@
 </section>
 
 {% endblock content %}
-
-{% block footer %}
-
-{% include 'includes/footer_signin.html' %}
-
-{% endblock footer %}

@@ -1,28 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+  <title>
+  Users
+  </title>
+{% endblock %}
 {% block content %}
   <header class="header-2">
-  <div class="page-header min-vh-65 relative">
+  <div class="page-header mt-7 relative">
     <div class="container">
       <h1>
-        Recipes
+        Users
+        {% include "includes/search_form.html" %}
       </h1>
-      {% if  %}
+      {% if useraccount_list %}
         <table class="table">
           <tr>
             <th>ID</th>
-            <th>Recipe name</th>
-            <th>Game</th>
-            <th>Dish type</th>
+            <th>Username</th>
+            <th>Type user</th>
           </tr>
-        {% for recipe in recipe_list %}
+        {% for useraccount in useraccount_list %}
+          {% if useraccount.type_user%}
           <tr>
-            <td>{{ recipe.id }}</td>
-            <td><a href="{{ recipe.get_absolute_url }}">{{ recipe.name }}</a></td>
-            <td>{{ recipe.game_id.name }}</td>
-            <td>{{ recipe.type_of_dish.name }}</td>
+            <td>{{ useraccount.id }}</td>
+            <td><a href="{{ useraccount.get_absolute_url }}">{{ useraccount.username }}</a></td>
+            <td>{{ useraccount.type_user }}</td>
           </tr>
+          {% endif %}
         {% endfor %}
 
         </table>

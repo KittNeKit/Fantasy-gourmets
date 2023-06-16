@@ -1,10 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>
+  Recipe
+</title>
+{% endblock %}
+{% block content %}
+  <header class="header-2">
+  <div class="page-header mt-7 relative">
+    <div class="container">
+      <h1>
+        Recipes
+        {% if user.type_user_id == 1 %}
+        <a href="{% url 'menu:recipe-create' %}">
+          <button type="submit" class="btn btn-lg bg-gradient-primary">add recipe!</button>
+        </a>
+        {% endif %}
+      {% include "includes/search_form.html" %}
+      </h1>
+      {% if recipe_list %}
+        <table class="table">
+          <tr>
+            <th>ID</th>
+            <th>Recipe name</th>
+            <th>Game</th>
+            <th>Dish type</th>
+            <th>Time to cook</th>
+          </tr>
+        {% for recipe in recipe_list %}
+          <tr>
+            <td>{{ recipe.id }}</td>
+            <td><a href="{{ recipe.get_absolute_url }}">{{ recipe.name }}</a></td>
+            <td>{{ recipe.game_id.name }}</td>
+            <td>{{ recipe.type_of_dish.name }}</td>
+            <td>{{ recipe.time_to_cook }}</td>
+          </tr>
+        {% endfor %}
+
+        </table>
+    {% else %}
+      <p>There are no recipe.</p>
+    {% endif %}
+    </div>
+  </div>
+  </header>
+
+{% endblock %}

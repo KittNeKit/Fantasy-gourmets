@@ -9,7 +9,7 @@
           <a class="navbar-brand font-weight-bolder ms-sm-3"
             href="/" rel="tooltip"
             title="Designed and Coded by Creative Tim" data-placement="bottom">
-            Soft UI Design System
+            Fantasy Gourmets
           </a>
           <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
@@ -23,53 +23,33 @@
           <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
             <ul class="navbar-nav navbar-nav-hover ms-lg-12 ps-lg-5 w-100">
               <li class="nav-item dropdown dropdown-hover mx-2">
-                <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                  href="javascript:;" id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
-                  Pages
-                  <img src="{% static 'img/down-arrow-dark.svg' %}" alt="down-arrow" class="arrow ms-1">
-                </a>
+                <a href="{% url 'menu:recipe-list' %}"
+                    type="button" class="btn btn-outline-dark mb-0">Recipe</a>
               </li>
 
               <li class="nav-item dropdown dropdown-hover mx-2">
-                <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                  href="javascript:;" id="dropdownMenuBlocks" data-bs-toggle="dropdown" aria-expanded="false">
-                  Blocks
-                  <img src="{% static 'img/down-arrow-dark.svg' %}" alt="down-arrow" class="arrow ms-1" />
-                </a>
+                <a href="{% url 'menu:game-list' %}"
+                    type="button" class="btn btn-outline-dark mb-0">Games</a>
               </li>
 
               <li class="nav-item dropdown dropdown-hover mx-2">
-                <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
-                  href="javascript:;" id="dropdownMenuDocs" data-bs-toggle="dropdown" aria-expanded="false">
-                  Docs
-                  <img src="{% static 'img/down-arrow-dark.svg' %}" alt="down-arrow" class="arrow ms-1">
-                </a>
+                <a href="{% url 'menu:useraccount-list' %}"
+                    type="button" class="btn btn-outline-dark mb-0">Users</a>
               </li>
-
-              {% if 10 == 2 %}
+              {% if request.user.is_authenticated %}
               <li class="nav-item ms-lg-auto">
-                <a class="nav-link nav-link-icon me-2"
-                  href="{% url 'logout' %}">
-                  <i class="fa fa-sign-out me-1"></i>
-                  <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Logout">Logout</p>
-                </a>
+                  <a href="{% url 'logouted' %}" target="_blank"
+                  class="btn btn-lg bg-gradient-primary btn-round mb-0 me-1 mt-2 mt-md-0">
+                    <i class="fa fa-sign-out me-1"></i>Logout</a>
               </li>
               {% else %}
               <li class="nav-item ms-lg-auto">
-                <a class="nav-link nav-link-icon me-2"
-                  href="{% url 'login' %}">
-                  <i class="fa fa-sign-in me-1"></i>
-                  <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Login">Login</p>
-                </a>
+                  <a href="{% url 'login' %}" target="_blank"
+                  class="btn btn-lg bg-gradient-primary  btn-round mb-0 me-1 mt-2 mt-md-0">
+                    <i class="fa fa-sign-in me-1"></i>Login</a>
               </li>
               {% endif %}
 
-              <li class="nav-item my-auto ms-3 ms-lg-0">
-                <a href="https://appseed.us/product/soft-ui-design/django/" target="_blank"
-                  class="btn btn-sm  bg-gradient-primary  btn-round mb-0 me-1 mt-2 mt-md-0">Download</a>
-              </li>
             </ul>
           </div>
         </div>

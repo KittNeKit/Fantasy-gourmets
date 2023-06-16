@@ -1,7 +1,13 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from menu.models import UserAccount, Recipe, TypeOfDish, Game, TypeUser
+from menu.models import (
+    UserAccount,
+    Recipe,
+    TypeOfDish,
+    Game,
+    TypeUser
+)
 
 
 @admin.register(UserAccount)
@@ -35,5 +41,3 @@ class RecipeAdmin(admin.ModelAdmin):
 admin.site.register(TypeOfDish)
 admin.site.register(Game)
 admin.site.register(TypeUser)
-
-
