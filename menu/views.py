@@ -69,7 +69,7 @@ class RecipeCreateView(LoginRequiredMixin, generic.CreateView):
     success_url = reverse_lazy("menu:recipe-list")
 
 
-class GameListView(generic.ListView):
+class GameListView(LoginRequiredMixin, generic.ListView):
     model = Game
 
     def get_context_data(self, *, object_list=None, **kwargs):
@@ -94,7 +94,7 @@ class GameListView(generic.ListView):
             )
 
 
-class GameDetailView(generic.DetailView):
+class GameDetailView(LoginRequiredMixin, generic.DetailView):
     model = Game
 
     def get_context_data(self, *, object_list=None, **kwargs):
