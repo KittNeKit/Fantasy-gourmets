@@ -2,142 +2,108 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
 from django.urls import reverse
 
-from taxi.models import Car, Manufacturer
+from menu.models import Recipe, Game, TypeOfDish, TypeUser
 
-CAR_LIST_URL = reverse("taxi:car-list")
+RECIPE_LIST_URL = reverse("menu:recipe-list")
 
 
-class PublicCarTest(TestCase):
+class PublicRecipeTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        manufacturer = Manufacturer.objects.create(name="Test Manufacturer")
-        Car.objects.create(model="Test 1", manufacturer=manufacturer)
-        Car.objects.create(model="Test 2", manufacturer=manufacturer)
+        game = Game.objects.create(name="Test Game")
+        type_of_dish = TypeOfDish.objects.create(name="Test TypeOfDish")
+        Recipe.objects.create(name="Test 1",
+                              game_id=game,
+                              time_to_cook=20,
+                              type_of_dish=type_of_dish)
+        Recipe.objects.create(name="Test 2",
+                              game_id=game,
+                              time_to_cook=20,
+                              type_of_dish=type_of_dish)
 
     def setUp(self) -> None:
         self.client = Client()
 
-    def test_login_required_car_list(self):
-        response = self.client.get(CAR_LIST_URL)
+    def test_login_required_recipe_list(self):
+        response = self.client.get(RECIPE_LIST_URL)
         self.assertNotEqual(response.status_code, 200)
-        self.assertRedirects(response, "/accounts/login/?next=/cars/")
+        self.assertRedirects(response, "/accounts/login/?next=/recipe/")
 
-    def test_login_required_car_detail(self):
-        car_detail = Car.objects.get(pk=1)
+    def test_login_required_recipe_detail(self):
+        recipe_detail = Recipe.objects.get(pk=1)
         response = self.client.get(
-            reverse("taxi:car-detail", kwargs={"pk": car_detail.pk})
+            reverse("menu:recipe-detail", kwargs={"pk": recipe_detail.pk})
         )
         self.assertNotEqual(response.status_code, 200)
-        self.assertRedirects(response, "/accounts/login/?next=/cars/1/")
+        self.assertRedirects(response, "/accounts/login/?next=/recipe/1/")
 
-    def test_login_required_creation_car_form(self):
-        response = self.client.get(reverse("taxi:car-create"))
+    def test_login_required_creation_recipe_form(self):
+        response = self.client.get(reverse("menu:recipe-create"))
         self.assertNotEqual(response.status_code, 200)
-        self.assertRedirects(response, "/accounts/login/?next=/cars/create/")
+        self.assertRedirects(response, "/accounts/login/?next=/recipe/create/")
 
 
-class PrivateCarTest(TestCase):
+class PrivateRecipeTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        manufacturer = Manufacturer.objects.create(name="Test Manufacturer")
-        for car_id in range(8):
-            Car.objects.create(
-                model=f"Test {car_id}",
-                manufacturer=manufacturer
+        game = Game.objects.create(name="Test Game")
+        type_of_dish = TypeOfDish.objects.create(name="Test TypeOfDish")
+        for recipe_id in range(13):
+            Recipe.objects.create(
+                name=f"Test {recipe_id}",
+                game_id=game,
+                time_to_cook=20,
+                type_of_dish=type_of_dish
             )
-        get_user_model().objects.create_user(
-            username="test_1",
-            password="test password123",
-            license_number="QWE12345"
-        )
-        get_user_model().objects.create_user(
-            username="test_2",
-            password="test password123",
-            license_number="XSW12345"
-        )
 
     def setUp(self) -> None:
+        type_of_user_chef = TypeUser.objects.create(type="Chef")
         self.user = get_user_model().objects.create_user(
             username="test",
-            password="test password"
+            password="test password",
+            type_user=type_of_user_chef,
         )
         self.client.force_login(self.user)
 
-    def test_cars_pagination_is_five(self):
-        response = self.client.get(CAR_LIST_URL)
+    def test_recipe_pagination_is_ten(self):
+        response = self.client.get(RECIPE_LIST_URL)
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["is_paginated"] is True)
-        self.assertEqual(len(response.context["car_list"]), 5)
-        self.assertTemplateUsed(response, "taxi/car_list.html")
+        self.assertEqual(len(response.context["recipe_list"]), 10)
+        self.assertTemplateUsed(response, "menu/recipe_list.html")
 
-    def test_cars_pagination_second_page(self):
-        response = self.client.get(CAR_LIST_URL + "?page=2")
+    def test_recipe_pagination_second_page(self):
+        response = self.client.get(RECIPE_LIST_URL + "?page=2")
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.context["is_paginated"] is True)
-        self.assertEqual(len(response.context["car_list"]), 3)
-        self.assertTemplateUsed(response, "taxi/car_list.html")
+        self.assertEqual(len(response.context["recipe_list"]), 3)
+        self.assertTemplateUsed(response, "menu/recipe_list.html")
 
-    def test_retrieve_car_detail(self):
-        car_detail = Car.objects.get(pk=1)
+    def test_retrieve_recipe_detail(self):
+        recipe_detail = Recipe.objects.get(pk=1)
         response = self.client.get(
-            reverse("taxi:car-detail", kwargs={"pk": car_detail.pk})
+            reverse("menu:recipe-detail", kwargs={"pk": recipe_detail.pk})
         )
 
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "taxi/car_detail.html")
+        self.assertTemplateUsed(response, "menu/recipe_detail.html")
 
-    def test_toggle_assign_to_car(self):
-        new_car = Car.objects.get(pk=1)
-        response = self.client.get(reverse(
-            "taxi:car-detail",
-            kwargs={"pk": new_car.pk}
-        ))
-        self.assertNotContains(response, "Delete me from this car")
-        self.assertContains(response, "Assign me from this car")
+    def test_create_recipe_btn_only_for_chef(self):
+        response = self.client.get(RECIPE_LIST_URL)
+        self.assertContains(response, "add recipe!")
 
-        self.user.cars.add(new_car)
-        response = self.client.get(reverse(
-            "taxi:car-detail", kwargs={"pk": new_car.pk}
-        ))
-        self.assertContains(response, "Delete me from this car")
-        self.assertNotContains(response, "Assign me from this car")
-
-    def test_car_creation(self):
-        manufacturer_1 = Manufacturer.objects.get(pk=1)
-        driver_1 = get_user_model().objects.get(pk=1)
-        driver_2 = get_user_model().objects.get(pk=2)
-        form_data = {
-            "model": "test model",
-            "manufacturer": manufacturer_1.id,
-            "drivers": [driver_1.id, driver_2.id]
-        }
-        self.client.post(reverse("taxi:car-create"), data=form_data)
-        new_car = Car.objects.get(model=form_data["model"])
-
-        self.assertEqual(new_car.model, form_data["model"])
-        self.assertEqual(new_car.manufacturer, manufacturer_1)
-        self.assertEqual(list(new_car.drivers.all()), [driver_1, driver_2])
-
-    def test_delete_car(self):
-        car = Car.objects.get(pk=1)
-        response = self.client.post(
-            reverse("taxi:car-delete", kwargs={"pk": car.id})
-        )
-        self.assertEqual(response.status_code, 302)
-        self.assertFalse(Car.objects.filter(pk=car.id).exists())
-
-    def test_car_search_matches_found(self):
-        response = self.client.get("/cars/?model=test+2")
-        searching_car = Car.objects.filter(model="Test 2")
+    def test_recipe_search_matches_found(self):
+        response = self.client.get("/recipe/?name=test+2")
+        searching_recipe = Recipe.objects.filter(name="Test 2")
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(
-            list(response.context["car_list"]),
-            list(searching_car)
+            list(response.context["recipe_list"]),
+            list(searching_recipe)
         )
 
-    def test_car_search_no_matches_found(self):
-        response = self.client.get("/cars/?model=Fake+name")
+    def test_recipe_search_no_matches_found(self):
+        response = self.client.get("/recipe/?name=Fake+name")
 
         self.assertEqual(response.status_code, 200)
-        self.assertContains(response, "There are no cars in taxi")
+        self.assertContains(response, "There are no recipe.")
