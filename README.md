@@ -7,6 +7,8 @@ Do you think about site, where you can take recipe from some games and cook it i
 
 This your solution. Fantasy gourmets it's a site, where whoever with a chef account can create his own recipe from game and share it to other.
 
+## Check it out!
+[Fantasy gourmets project deployed on Render](fantasy-gourmets.onrender.com)
 ## Installation
 
 1. Clone the repository:
