@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>
+  Games
+  </title>
+{% endblock %}
+
+{% block content %}
+  <header class="header-2">
+  <div class="page-header mt-7 relative">
+    <div class="container">
+      <h1>
+        Games
+        {% include "includes/search_form.html" %}
+      </h1>
+      {% if game_list %}
+        <table class="table">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+          </tr>
+        {% for game in game_list %}
+          <tr>
+            <td>{{ game.id }}</td>
+            <td><a href="{{ game.get_absolute_url }}">{{ game.name }}</a></td>
+          </tr>
+        {% endfor %}
+
+        </table>
+    {% else %}
+      <p>There are no games.</p>
+    {% endif %}
+    </div>
+  </div>
+  </header>
+
+{% endblock %}

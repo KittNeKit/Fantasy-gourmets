@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>
+  Users
+  </title>
+{% endblock %}
+{% block content %}
+  <header class="header-2">
+  <div class="page-header mt-7 relative">
+    <div class="container">
+      <h1>
+        Users
+        {% include "includes/search_form.html" %}
+      </h1>
+      {% if useraccount_list %}
+        <table class="table">
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Type user</th>
+          </tr>
+        {% for useraccount in useraccount_list %}
+          {% if useraccount.type_user%}
+          <tr>
+            <td>{{ useraccount.id }}</td>
+            <td><a href="{{ useraccount.get_absolute_url }}">{{ useraccount.username }}</a></td>
+            <td>{{ useraccount.type_user }}</td>
+          </tr>
+          {% endif %}
+        {% endfor %}
+
+        </table>
+    {% else %}
+      <p>There are no users.</p>
+    {% endif %}
+    </div>
+  </div>
+  </header>
+
+{% endblock %}
