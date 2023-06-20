@@ -1,12 +1,11 @@
 # Fantasy gourmets
-a project, that offers a rich collection of recipes for dishes from fantasy worlds.
+A project, that offers a rich collection of recipes for dishes from fantasy worlds.
 
 ## Description
 
-Do you think about site, where you can take recipe from some games and cook it in real life?
+Do you think about a site, where you can take a recipe from some games and cook it in real life?
 
-This your solution. Fantasy gourmets it's a site, where whoever with a chef account can create his own recipe from game and share it to other.
-
+This is your solution. Fantasy Gourmets is a site where whoever has a chef account can create his own recipe from the game and share it with others.
 ## Check it out!
 [Fantasy gourmets project deployed on Render](https://fantasy-gourmets.onrender.com)
 ## Installation
