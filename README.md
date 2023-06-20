@@ -33,6 +33,11 @@ python manage.py migrate
 python manage.py runserver
 ```
 5. Access the website locally at http://localhost:8000.
+6. Log in by the test user:
+```
+username = user
+password = user12345
+```
 
 ## Contributing
 
