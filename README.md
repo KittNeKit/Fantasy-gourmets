@@ -20,8 +20,7 @@ git clone https://github.com/your-username/Fantasy-gourmets
 ```bash
 cd project-name
 ```
-3. Create a .env file in the project's root directory.
-4. create an .env_sample file with your examples of env variables
+3. Сopy .env_sample file with your examples of env variables to your .env
 file:
 ```
 # Django Secret Key
@@ -31,13 +30,13 @@ DJANGO_SECRET_KEY=your_secret_key_here
 DJANGO_DEBUG=1
 ```
 Replace your_secret_key_here with your own secret key and choose the appropriate debug mode
-5. Install the dependencies
+4. Install the dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-6. Set up the database:
+5. Set up the database:
 
 Run the migrations
 
@@ -45,17 +44,17 @@ Run the migrations
 python manage.py migrate
 ```
 
-7. Use the following command to load prepared data from fixture to test:
+6. Use the following command to load prepared data from fixture to test:
 ```bash
 python manage.py loaddata fixture_data.json
 ```
 
-8. Start the development server
+7. Start the development server
 ```bash
 python manage.py runserver
 ```
-9. Access the website locally at http://localhost:8000.
-10. Log in by the test user:
+8. Access the website locally at http://localhost:8000.
+9. Log in by the test user:
 ```
 username = user
 password = user12345
