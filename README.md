@@ -21,22 +21,32 @@ git clone https://github.com/your-username/Fantasy-gourmets
 cd project-name
 ```
 3. Сopy .env_sample file with your examples of env variables to your .env
-file:
-```
-# Django Secret Key
-DJANGO_SECRET_KEY=your_secret_key_here
+file
 
-# Django Debug Mode
-DJANGO_DEBUG=1
+
+4. Once you're in the desired directory, run the following command to create a virtual environment:
+```bash
+python -m venv venv
 ```
-Replace your_secret_key_here with your own secret key and choose the appropriate debug mode
-4. Install the dependencies
+5. Activate the virtual environment:
+
+On macOS and Linux:
+
+```bash
+source venv/bin/activate
+```
+On Windows:
+```bash
+venv\Scripts\activate
+```
+
+6. Install the dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-5. Set up the database:
+7. Set up the database:
 
 Run the migrations
 
@@ -44,17 +54,17 @@ Run the migrations
 python manage.py migrate
 ```
 
-6. Use the following command to load prepared data from fixture to test:
+8. Use the following command to load prepared data from fixture to test:
 ```bash
 python manage.py loaddata fixture_data.json
 ```
 
-7. Start the development server
+9. Start the development server
 ```bash
 python manage.py runserver
 ```
-8. Access the website locally at http://localhost:8000.
-9. Log in by the test user:
+10. Access the website locally at http://localhost:8000.
+11. Log in by the test user:
 ```
 username = user
 password = user12345
